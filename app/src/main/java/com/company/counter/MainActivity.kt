@@ -1,11 +1,10 @@
 package com.company.counter
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
-import kotlinx.android.synthetic.main.activity_main.*
+import androidx.databinding.DataBindingUtil
+import com.company.counter.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
@@ -13,22 +12,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
-        Log.d(TAG, "onCreate: ")
+        val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
 
-        viewModel.countLiveData.observe(this, Observer { count ->
-            counter_text.text = "$count"
-        })
-
-        add_button.setOnClickListener {
-            viewModel.increaseCount()
-        }
-
-        sub_button.setOnClickListener {
-            viewModel.decreaseCount()
-        }
-
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
     }
 
     companion object {
