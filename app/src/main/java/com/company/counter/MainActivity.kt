@@ -5,15 +5,13 @@ import android.app.Application
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.viewModels
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-    
-    companion object {
-        val TAG = MainActivity::class.java.simpleName
-    }
 
-    var count = 0
+    val viewModel by viewModels<MainViewModel>()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,14 +19,16 @@ class MainActivity : AppCompatActivity() {
 
         Log.d(TAG, "onCreate: ")
 
+        counter_text.text = "${viewModel.count}"
+
         add_button.setOnClickListener {
-            count++
-            counter_text.text = "$count"
+            viewModel.count++
+            counter_text.text = "${viewModel.count}"
         }
 
         sub_button.setOnClickListener {
-            count--
-            counter_text.text = "$count"
+            viewModel.count--
+            counter_text.text = "${viewModel.count}"
         }
 
         registerActivityLifecycleCallbacks(object : Application.ActivityLifecycleCallbacks {
@@ -61,5 +61,9 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
+    }
+
+    companion object {
+        val TAG = MainActivity::class.java.simpleName
     }
 }
