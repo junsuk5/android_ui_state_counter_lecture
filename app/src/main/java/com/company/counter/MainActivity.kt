@@ -19,7 +19,4 @@ class MainActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
     }
 
-    companion object {
-        val TAG = MainActivity::class.java.simpleName
-    }
 }
